@@ -1,9 +1,9 @@
 export interface IProduct {
-  name: String;
-  price: Number;
-  img: String;
+  name: string;
+  price: number;
+  img: string;
 }
 
 export interface ICart {
-  id: Number;
+  id: number;
 }

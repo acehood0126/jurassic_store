@@ -5,7 +5,7 @@ import { Products } from "../../enum";
 
 export interface CounterState {
   products: Array<IProduct>;
-  cart: Array<Number>;
+  cart: Array<number>;
 }
 
 const initialState: CounterState = {
@@ -22,11 +22,6 @@ export const productSlice = createSlice({
     },
     removeCart: (state, action: PayloadAction<number>) => {
       const index = state.cart.indexOf(action.payload);
-      console.log(
-        "🚀 ~ file: productSlice.ts:25 ~ action.payload",
-        action.payload
-      );
-      console.log(index);
       if (index > -1) state.cart.splice(index, 1);
     },
   },

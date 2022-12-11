@@ -21,7 +21,8 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  console.log("🚀 ~ file: index.tsx:24 ~ Home ~ search", search);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const products = useSelector((state: RootState) => state.Product.products);
   const cart = useSelector((state: RootState) => state.Product.cart);
 
@@ -29,6 +30,17 @@ const Home = () => {
 
   const scrollPosition = useScrollPosition();
   const hasWindow = typeof window !== "undefined";
+
+  useEffect(() => {
+    let total = 0;
+    products.forEach((item, index) => {
+      const id = cart.indexOf(index);
+      if (id > -1) {
+        total += item.price;
+      }
+    });
+    setTotalPrice(total);
+  }, [cart]);
 
   return (
     <>
@@ -114,13 +126,14 @@ const Home = () => {
         <DialogBody className="flex-auto overflow-auto mx-2 flex flex-col gap-2">
           {products.map((item, index) => {
             const id = cart.indexOf(index);
-            if (id > -1)
+            if (id > -1) {
               return <CartItem {...item} index={index} key={index} />;
+            }
           })}
         </DialogBody>
         <DialogFooter className="flex flex-row justify-between">
           <p className="ml-3 text-specialRed">
-            Total: <span className="font-bold">$180</span>
+            Total: <span className="font-bold">${totalPrice}</span>
           </p>
           <div className="flex flex-row">
             <Button

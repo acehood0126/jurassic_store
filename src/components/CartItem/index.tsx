@@ -7,10 +7,10 @@ import { removeCart } from "../../services/slices/productSlice";
 import TrashImg from "../../assets/images/trash.png";
 
 interface ICartItem {
-  index: Number;
-  name: String;
-  price: Number;
-  img: String;
+  index: number;
+  name: string;
+  price: number;
+  img: string;
 }
 
 const CartItem = ({ index, name, price, img }: ICartItem) => {

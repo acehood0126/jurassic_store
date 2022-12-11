@@ -12,11 +12,11 @@ import { useDispatch } from "react-redux";
 import { addCart } from "../../services/slices/productSlice";
 
 interface IProductItem {
-  index: Number;
-  name: String;
-  price: Number;
-  img: String;
-  addedCart: Boolean;
+  index: number;
+  name: string;
+  price: number;
+  img: string;
+  addedCart: boolean;
 }
 
 const ProductItem = ({ index, name, price, img, addedCart }: IProductItem) => {
@@ -37,7 +37,7 @@ const ProductItem = ({ index, name, price, img, addedCart }: IProductItem) => {
         <div className="flex sm:flex-row flex-col justify-between gap-2 items-center w-full sm:mt-4 mt-2">
           <Typography variant="h5">${price}</Typography>
           <Button
-            disabled={addedCart === true}
+            disabled={addedCart}
             color="red"
             variant={addedCart ? "outlined" : "filled"}
             className="p-3"
