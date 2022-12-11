@@ -1,16 +1,19 @@
-import { useEffect } from "react";
-import { Button } from "@material-tailwind/react";
-import toast from "react-hot-toast";
+import ProductItem from "../../components/ProductItem";
 
 const Home = () => {
   return (
-    <Button
-      onClick={() => {
-        toast.success("Hello world!");
-      }}
-    >
-      Add to Cart
-    </Button>
+    <div className="m-10 flex flex-row gap-10 justify-center flex-wrap">
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+    </div>
   );
 };
 
