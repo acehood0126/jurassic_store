@@ -1,2 +1,3 @@
 # jurassic_store
-Ecommerce Test App using Vite & React & Tailwindcss
+
+E-commerce Test App using Vite & React & Tailwindcss
