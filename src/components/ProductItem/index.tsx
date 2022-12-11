@@ -20,19 +20,12 @@ interface IProductItem {
 }
 
 const ProductItem = ({ index, name, price, img, addedCart }: IProductItem) => {
-  const imgURL = "../../assets/images/products/" + img;
-  const [imageSource, setImageSource] = useState("0");
-  useEffect(() => {
-    console.log(`../../assets/images/products/${img}`);
-    import(imgURL).then((image) => setImageSource(image.default));
-  }, []);
-
   const dispatch = useDispatch();
   return (
     <Card className="w-72">
       <CardHeader color="gray" className="relative h-52">
         <img
-          src={imageSource}
+          src={`/imgs/products/${img}`}
           alt="product"
           className="h-full w-full object-cover"
         />
