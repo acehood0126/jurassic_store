@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import Item1 from "../../assets/images/products/item1.png";
 import {
   Button,
   Card,
@@ -7,26 +7,46 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 
-const ProductItem = () => {
+import { addCart } from "../../services/slices/productSlice";
+
+interface IProductItem {
+  index: Number;
+  name: String;
+  price: Number;
+  img: String;
+  addedCart: Boolean;
+}
+
+const ProductItem = ({ index, name, price, img, addedCart }: IProductItem) => {
+  const dispatch = useDispatch();
   return (
     <Card className="w-72">
       <CardHeader color="gray" className="relative h-52">
-        <img src={Item1} alt="product" className="h-full w-full object-cover" />
+        <img
+          src={`/src/assets/images/products/${img}`}
+          alt="product"
+          className="h-full w-full object-cover"
+        />
       </CardHeader>
       <CardBody className="text-center">
         <Typography variant="h5" className="mb-2">
-          Cozy 5 Stars Apartment
+          {name}
         </Typography>
         <div className="flex sm:flex-row flex-col justify-between gap-2 items-center w-full sm:mt-4 mt-2">
-          <Typography variant="h5">$899</Typography>
+          <Typography variant="h5">${price}</Typography>
           <Button
+            disabled={addedCart === true}
             color="red"
+            variant={addedCart ? "outlined" : "filled"}
+            className="p-3"
             onClick={() => {
+              dispatch(addCart(Number(index)));
               toast.success("Added to cart");
             }}
           >
-            Add to Cart
+            {addedCart ? "Added to Cart" : "Add to Cart"}
           </Button>
         </div>
       </CardBody>

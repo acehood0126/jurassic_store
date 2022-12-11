@@ -6,7 +6,7 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ProductItem from "../../components/ProductItem";
 import CartItem from "../../components/CartItem";
@@ -15,8 +15,15 @@ import { useScrollPosition } from "../../hooks/useScrollPosition";
 import CartImg from "../../assets/images/shopping-cart.png";
 import SearchImg from "../../assets/images/search.png";
 
+import { RootState } from "../../services/store";
+import { useSelector } from "react-redux";
+
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  console.log("🚀 ~ file: index.tsx:24 ~ Home ~ search", search);
+  const products = useSelector((state: RootState) => state.Product.products);
+  const cart = useSelector((state: RootState) => state.Product.cart);
 
   const handleOpen = () => setOpen(!open);
 
@@ -25,11 +32,11 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-full">
+      <div className="flex flex-col justify-center items-center w-full pb-[50px]">
         <div
           className={`${
             scrollPosition > (hasWindow ? window.innerHeight : 0) / 2 + 100
-              ? "bg-white/30 backdrop-blur-lg  justify-between"
+              ? "bg-white/30 backdrop-blur-lg justify-between"
               : "bg-none  justify-end"
           } fixed w-full flex flex-row items-center z-10 top-0 transition ease-in-out sm:py-5 py-3 sm:px-10 px-5`}
         >
@@ -69,20 +76,26 @@ const Home = () => {
               <Input
                 label="Search for products..."
                 icon={<img src={SearchImg} alt="" />}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
             </div>
           </div>
           <div className="flex flex-row gap-10 justify-center flex-wrap w-full">
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
+            {products.map((item, index) => {
+              const id = cart.indexOf(index);
+              if (item.name.toLowerCase().search(search.toLowerCase()) > -1) {
+                return (
+                  <ProductItem
+                    {...item}
+                    addedCart={id > -1}
+                    index={index}
+                    key={index}
+                  />
+                );
+              }
+            })}
           </div>
         </div>
       </div>
@@ -99,24 +112,11 @@ const Home = () => {
       >
         <DialogHeader>Cart</DialogHeader>
         <DialogBody className="flex-auto overflow-auto mx-2 flex flex-col gap-2">
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {products.map((item, index) => {
+            const id = cart.indexOf(index);
+            if (id > -1)
+              return <CartItem {...item} index={index} key={index} />;
+          })}
         </DialogBody>
         <DialogFooter className="flex flex-row justify-between">
           <p className="ml-3 text-specialRed">
