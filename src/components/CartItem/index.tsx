@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 
@@ -13,11 +14,17 @@ interface ICartItem {
 }
 
 const CartItem = ({ index, name, price, img }: ICartItem) => {
+  const imgURL = "../../assets/images/products/" + img;
+  const [imageSource, setImageSource] = useState("0");
+  useEffect(() => {
+    console.log(`../../assets/images/products/${img}`);
+    import(imgURL).then((image) => setImageSource(image.default));
+  }, []);
   const dispatch = useDispatch();
   return (
     <div className="w-full h-[100px] p-2 bg-none border-2 flex flex-row justify-between items-center rounded-lg gap-3">
       <img
-        src={`/src/assets/images/products/${img}`}
+        src={imageSource}
         alt=""
         className="w-[80px] h-[80px] object-cover rounded-lg"
       />
