@@ -16,13 +16,13 @@ interface ICartItem {
 const CartItem = ({ index, name, price, img }: ICartItem) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-full h-[100px] p-2 bg-none border-2 flex flex-row justify-between items-center rounded-lg gap-3">
+    <div className="w-full h-[100px] p-2 bg-none border-2 flex flex-row justify-between items-center rounded-lg gap-3 bg-white">
       <img
         src={`/imgs/products/${img}`}
         alt=""
         className="w-[80px] h-[80px] object-cover rounded-lg"
       />
-      <div className="flex-auto bg-white h-[80px] flex flex-col justify-between items-start py-2">
+      <div className="flex-auto h-[80px] flex flex-col justify-between items-start py-2 text-black">
         <p>{name}</p>
         <div className="flex flex-row justify-between w-full">
           <p className="">

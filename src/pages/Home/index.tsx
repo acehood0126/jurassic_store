@@ -7,18 +7,23 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import ProductItem from "../../components/ProductItem";
 import CartItem from "../../components/CartItem";
 import { useScrollPosition } from "../../hooks/useScrollPosition";
+import { RootState } from "../../services/store";
+import { getProductAll } from "../../middleware/get-apis";
+import { initializeProduct } from "../../services/slices/productSlice";
 
 import CartImg from "../../assets/images/shopping-cart.png";
 import SearchImg from "../../assets/images/search.png";
-
-import { RootState } from "../../services/store";
-import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
@@ -30,6 +35,18 @@ const Home = () => {
 
   const scrollPosition = useScrollPosition();
   const hasWindow = typeof window !== "undefined";
+
+  const getProductList = async () => {
+    const res = await getProductAll();
+    if (!!res) {
+      dispatch(initializeProduct(res));
+    } else {
+      toast.error("Connection failed with server!");
+    }
+  };
+  useEffect(() => {
+    getProductList();
+  }, []);
 
   useEffect(() => {
     let total = 0;
@@ -142,15 +159,17 @@ const Home = () => {
               onClick={handleOpen}
               className="mr-1 sm:text-[12px] text-[10px]"
             >
-              <span>Cancel</span>
+              Cancel
             </Button>
             <Button
               variant="gradient"
               color="green"
-              onClick={handleOpen}
+              onClick={() => {
+                navigate("/checkout");
+              }}
               className="sm:text-[12px] text-[10px]"
             >
-              <span>Checkout</span>
+              Checkout
             </Button>
           </div>
         </DialogFooter>

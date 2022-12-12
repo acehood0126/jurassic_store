@@ -9,7 +9,7 @@ export interface CounterState {
 }
 
 const initialState: CounterState = {
-  products: Products,
+  products: [],
   cart: [],
 };
 
@@ -24,10 +24,13 @@ export const productSlice = createSlice({
       const index = state.cart.indexOf(action.payload);
       if (index > -1) state.cart.splice(index, 1);
     },
+    initializeProduct(state, action: PayloadAction<Array<IProduct>>) {
+      state.products = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addCart, removeCart } = productSlice.actions;
+export const { addCart, removeCart, initializeProduct } = productSlice.actions;
 
 export default productSlice.reducer;
